@@ -12,10 +12,7 @@ elgg_register_event_handler('init', 'system', 'threads_init');
  */
 function threads_init() {
 
-	elgg_register_library('elgg:discussion', elgg_get_plugins_path() . 'threads/lib/discussion.php');
 	elgg_register_library('elgg:threads', elgg_get_plugins_path() . 'threads/lib/threads.php');
-
-	elgg_register_page_handler('discussion', 'threads_page_handler');
 	
 	$action_base = elgg_get_plugins_path() . 'threads/actions/discussion';
 	elgg_register_action('discussion/reply/save', "$action_base/reply/save.php");
@@ -36,43 +33,6 @@ function threads_init() {
 	
 	$parsequery_js = 'mod/threads/vendors/jquery-plugins/parsequery.js';
 	elgg_register_js('jquery.plugins.parsequery', $parsequery_js);
-}
-
-/**
- * Discussion page handler
- *
- * URLs take the form of
- *  All topics in site:    discussion/all
- *  List topics in forum:  discussion/owner/<guid>
- *  View discussion topic: discussion/view/<guid>
- *  Add discussion topic:  discussion/add/<guid>
- *  Edit discussion topic: discussion/edit/<guid>
- *
- * @param array $page Array of url segments for routing
- */
-function threads_page_handler($page) {
-
-	elgg_load_library('elgg:discussion');
-
-	elgg_push_breadcrumb(elgg_echo('discussion'), 'discussion/all');
-
-	switch ($page[0]) {
-		case 'all':
-			discussion_handle_all_page();
-			break;
-		case 'owner':
-			discussion_handle_list_page($page[1]);
-			break;
-		case 'add':
-			discussion_handle_edit_page('add', $page[1]);
-			break;
-		case 'edit':
-			discussion_handle_edit_page('edit', $page[1]);
-			break;
-		case 'view':
-			discussion_handle_view_page($page[1]);
-			break;
-	}
 }
 
 /**
