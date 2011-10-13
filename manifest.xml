@@ -12,6 +12,11 @@
 		<type>elgg_version</type>
 		<version>2010030101</version>
 	</requires>
+	<requires>
+                <type>priority</type>
+                <priority>after</priority>
+                <plugin>groups</plugin>
+        </requires>
 	<activate_on_install>true</activate_on_install>
 	<admin_interface>simple</admin_interface>
 </plugin_manifest>
